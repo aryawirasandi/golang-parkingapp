@@ -5,8 +5,17 @@ this repo still work in progress, so i'll put in the board to track this current
 
 # How to run it ?
 - first you need a mysql docker container, all you have to do is compose up the mysql then it will run at port 4444
+just run
+```bash
+docker compose up
+```
+in the root of the project
 - copy the .env-example to .env, the env is exactly same as docker mysql environment
 - make sure you have golang in your machine
+- run migration in your machine, if you use docker compose, you just need to run this command 
+```bash
+migrate -path db/migrations -database "mysql://root:root@tcp(127.0.0.1:4444)/parkingdb?query" up
+```
 - then run 
 ```bash
  go run main.go
