@@ -21,3 +21,7 @@ migrate -path db/migrations -database "mysql://root:root@tcp(127.0.0.1:4444)/par
  go run main.go
 ```
 - thats it have a nice code 😉
+
+# Honorable Mention
+ - [Golang Migrate](https://github.com/golang-migrate/migrate)
+ - [Echo](https://echo.labstack.com/)
