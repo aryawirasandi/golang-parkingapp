@@ -23,7 +23,8 @@ func Mapper(conn *database.Env) *Server {
 
 func (server Server) Run(portRunning string) {
 	fullPathPort := fmt.Sprintf(":%s", portRunning)
-	g := server.e.Group("/api/v1/")
-	g.GET("/", server.contrl.GetUser)
+	g := server.e.Group("/api/v1")
+	g.POST("/auth/login", server.contrl.GetUser)
+	g.POST("/auth/register", server.contrl.CreateUser)
 	server.e.Logger.Fatal(server.e.Start(fullPathPort))
 }
