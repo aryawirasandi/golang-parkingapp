@@ -1,19 +1,13 @@
 package controller
 
 import (
-	"database/sql"
 	"net/http"
 
 	"github.com/aryawirasandi/parking-app/entity"
 	"github.com/aryawirasandi/parking-app/model"
-	"github.com/labstack/echo/v4"
 )
 
-type Controller struct {
-	DB *sql.DB
-}
-
-func (app *Controller) GetUser(c echo.Context) error {
+func (app *Controller) GetUser(c ech) error {
 	u := new(entity.Credential)
 
 	if err := c.Bind(u); err != nil {
@@ -43,7 +37,7 @@ func (app *Controller) GetUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (app *Controller) CreateUser(c echo.Context) error {
+func (app *Controller) CreateUser(c ech) error {
 	u := new(entity.Credential)
 
 	if err := c.Bind(u); err != nil {
