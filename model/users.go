@@ -2,25 +2,21 @@ package model
 
 import (
 	"log"
-	"time"
 	"os"
-	"github.com/aryawirasandi/parking-app/entity"
-	"golang.org/x/crypto/bcrypt"
-	"github.com/golang-jwt/jwt/v5"
-)
+	"time"
 
-type JWT struct {
-	username string `json:"username"`
-	role string `json:"role"`
-	jwt.RegisteredClaims
-}
+	"github.com/aryawirasandi/parking-app/entity"
+	"github.com/aryawirasandi/parking-app/middleware"
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
+)
 
 func (m Model) GetUser(username string, password string) (entity.User, error) {
 	var (
 		id        int
 		usr       string
 		pwd       string
-		role	  string
+		role      string
 		createdAt string
 		updatedAt string
 	)
@@ -31,11 +27,11 @@ func (m Model) GetUser(username string, password string) (entity.User, error) {
 	if err := bcrypt.CompareHashAndPassword([]byte(pwd), []byte(password)); err != nil {
 		return entity.User{}, err
 	}
-	
-	claims := &JWT{
-		usr,
-		role,
-		jwt.RegisteredClaims{
+
+	claims := middleware.JWTClaims{
+		Username: usr,
+		Role:     role,
+		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
 		},
 	}
@@ -48,7 +44,6 @@ func (m Model) GetUser(username string, password string) (entity.User, error) {
 	if err != nil {
 		return entity.User{}, err
 	}
-
 
 	return entity.User{
 		Id:       id,
