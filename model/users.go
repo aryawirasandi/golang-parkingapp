@@ -1,11 +1,13 @@
 package model
 
 import (
-	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/aryawirasandi/parking-app/entity"
+	"github.com/aryawirasandi/parking-app/middleware"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,24 +16,40 @@ func (m Model) GetUser(username string, password string) (entity.User, error) {
 		id        int
 		usr       string
 		pwd       string
-		token     string
 		role      string
 		createdAt string
 		updatedAt string
 	)
 
 	result := m.Database.QueryRow("SELECT * FROM users WHERE username = ?", username)
-	result.Scan(&id, &usr, &pwd, &token, &role, &createdAt, &updatedAt)
-	fmt.Printf("Haaaah %s", role)
+	result.Scan(&id, &usr, &pwd, &role, &createdAt, &updatedAt)
 
 	if err := bcrypt.CompareHashAndPassword([]byte(pwd), []byte(password)); err != nil {
 		return entity.User{}, err
 	}
+
+	claims := middleware.JWTClaims{
+		Username: usr,
+		Role:     role,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	secret := os.Getenv("JWT_SECRET")
+	t, err := token.SignedString([]byte(secret))
+
+	if err != nil {
+		return entity.User{}, err
+	}
+
 	return entity.User{
 		Id:       id,
 		Username: usr,
 		Password: pwd,
-		Token:    token,
+		Token:    t,
 		Role:     role,
 		TimeStamp: entity.TimeStamp{
 			CreatedAt: createdAt,
@@ -57,7 +75,7 @@ func (m Model) CreateUser(username string, password string) (entity.User, error)
 
 	var user entity.User
 	resultUser := m.Database.QueryRow("SELECT * FROM users WHERE username = ?", username)
-	resultUser.Scan(&user.Id, &user.Username, &user.Password, &user.Token, &user.Role, &user.CreatedAt, &user.UpdatedAt)
+	resultUser.Scan(&user.Id, &user.Username, &user.Password, &user.Role, &user.CreatedAt, &user.UpdatedAt)
 
 	return user, nil
 }
