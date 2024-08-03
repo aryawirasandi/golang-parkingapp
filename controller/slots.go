@@ -20,11 +20,11 @@ func (app *Controller) GetSlots(c ech) error {
 		Database: app.DB,
 	}
 
-	result, err := m.CreateSlot(u.SlotName, u.VisitorId)
+	result, err := m.CreateSlot(u.SlotName)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, entity.Response{
-			Message: "Something Wrong With Server",
+			Message: err.Error(),
 		})
 	}
 
