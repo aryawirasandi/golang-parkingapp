@@ -1,10 +1,10 @@
 package entity
 
 type Response struct {
-	Message string
+	Message string `json:"message"`
 }
 
 type ReponseWithData[T any] struct {
-	Data    T `json:"data"`
-	Message string
+	Message string `json:"message"`
+	Data    T      `json:"data"`
 }

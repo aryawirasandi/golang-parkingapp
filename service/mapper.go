@@ -41,9 +41,8 @@ func (server Server) Run(portRunning string) {
 
 	g.POST("/auth/login", server.contrl.GetUser)
 	g.POST("/auth/register", server.contrl.CreateUser)
-
-	// get lists of a
-	r.POST("/slots", server.contrl.GetSlots)
+	g.GET("/slots", server.contrl.GetListOfSlot)
+	r.POST("/create/slot", server.contrl.CreateSlot)
 
 	server.e.Logger.Fatal(server.e.Start(fullPathPort))
 }
