@@ -9,7 +9,7 @@ this repo still work in progress, so i'll put in the [board](https://github.com/
 
 # Preparation
 - install [golang](https://go.dev/)
-- install (docker)[https://www.docker.com/]
+- install [docker](https://www.docker.com/)
 
 # How to run it ?
 - first you need a mysql docker container, all you have to do is compose up the mysql then it will run at port 4444, open your terminal and run
