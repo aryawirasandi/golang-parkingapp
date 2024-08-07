@@ -52,8 +52,8 @@ func (m Model) GetUser(username string, password string) (entity.User, error) {
 		Token:    t,
 		Role:     role,
 		TimeStamp: entity.TimeStamp{
-			CreatedAt: createdAt,
-			UpdatedAt: updatedAt,
+			CreatedAt: &createdAt,
+			UpdatedAt: &updatedAt,
 		},
 	}, nil
 }
