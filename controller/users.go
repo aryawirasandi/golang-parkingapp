@@ -7,7 +7,7 @@ import (
 	"github.com/aryawirasandi/parking-app/model"
 )
 
-func (app *Controller) GetUser(c ech) error {
+func (app *Controller) GetUser(c e) error {
 	u := new(entity.Credential)
 
 	if err := c.Bind(u); err != nil {
@@ -37,7 +37,7 @@ func (app *Controller) GetUser(c ech) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (app *Controller) CreateUser(c ech) error {
+func (app *Controller) CreateUser(c e) error {
 	u := new(entity.Credential)
 
 	if err := c.Bind(u); err != nil {

@@ -7,7 +7,7 @@ import (
 	"github.com/aryawirasandi/parking-app/model"
 )
 
-func (app *Controller) CreateSlot(c ech) error {
+func (app *Controller) CreateSlot(c e) error {
 	u := new(entity.Slot)
 
 	if err := c.Bind(u); err != nil {
@@ -34,7 +34,7 @@ func (app *Controller) CreateSlot(c ech) error {
 	})
 }
 
-func (app *Controller) GetListOfSlot(c ech) error {
+func (app *Controller) GetListOfSlot(c e) error {
 
 	m := &model.Model{
 		Database: app.DB,
