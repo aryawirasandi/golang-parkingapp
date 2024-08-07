@@ -10,4 +10,4 @@ type Controller struct {
 	DB *sql.DB
 }
 
-type ech = echo.Context
+type e = echo.Context
